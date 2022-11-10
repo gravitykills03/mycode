@@ -42,6 +42,7 @@ answer5b = " "
 
 #One Player Game
 if begin == '1':
+
     while round < 1 and (answer1 != 'Gumdrops'):
         round += 1
         print(f"Round: {round} for {enterplayer1}")
@@ -125,6 +126,7 @@ if begin == '1':
 
 #Two Player Game
 if begin == '2':
+
     while round < 1 and (answer1 != 'Gumdrops'):
         round += 1
         print(f"Round: {round} for {enterplayer1}")
@@ -139,7 +141,7 @@ if begin == '2':
     else :
         print("Sorry " + enterplayer1 + ", the answer was Gumdrop. You don't get to move ahead any spaces.")
     print("Current spot: " + enterplayer1 + " : "+ str(spot))
-    if answer1b == 'Gumdrop' or 'Gumdrops':
+    if answer1b == 'Gumdrops':
         spotb += 6
         print("Correct " + enterplayer2 + ", you move ahead 6 steps!")
     else :
