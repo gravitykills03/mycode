@@ -3,6 +3,7 @@
 import sys
 import pyfiglet
 
+# ascii art called at specific points of the game
 zelda = pyfiglet.figlet_format("ZELDA")
 gameover = pyfiglet.figlet_format("GAME OVER")
 keyart = pyfiglet.figlet_format("KEY")
@@ -11,10 +12,12 @@ doorart = pyfiglet.figlet_format("DOOR")
 #change show Instructions to be more unique
 def showInstructions():
     """Show the game instructions when called"""
-    #print a main menu and the commands
+
+#print a main menu and the commands
     print('''
     RPG Game
     ========
+    Connected rooms on the map are shown by "-" or "|".
     Commands:
       Directions = "up, down, left, right"
       Keys = "yes, no"
@@ -28,6 +31,7 @@ inventory = []
 # At the start of the game, show the instructions for the user
 showInstructions()
 
+# create a class of Map and define the methods inside to call on when playing the game
 class Map:
 
     def __init__(self, height, width, player_x, player_y, paths):
@@ -37,6 +41,7 @@ class Map:
         self.y = player_y
         self.paths = paths
 
+    # making the moves for the player
     def move(self, direction):
         if direction == "up":
             if ((self.x, self.y -1), (self.x, self.y)) not in self.paths:
@@ -58,6 +63,8 @@ class Map:
                 print('Direction is blocked, choose a different route!')
             else:
                 self.x -= 1
+
+    # printing the map function
     def print_map(self):
             for y in range(0, self.height):
 
@@ -74,6 +81,7 @@ class Map:
                         sys.stdout.write("-")
                     else:
                         sys.stdout.write(" ")
+
                 # now that we've written the rooms, draw paths to next row
                 print()  # newline
                 for x in range(0, self.width):
@@ -133,10 +141,11 @@ class Map:
                 elif unlockDoor == "no":
                     print("Door is still locked")
                     self.x += 1
-            # battling the boss
+
+            # battling the boss (still working on it)
 #            if (self.x, self.y) == boss[0]:
 #                while True:
-#                    bossfight = {
+#                    characters = {
 #                            "Gannon": {
 #                                "HP" : 100,
 #                                "Attack" : "Stomp"
@@ -147,8 +156,8 @@ class Map:
 #                                }
 #                            }
 #                    print("You have entered the boss room to fight Gannon!")
-#                    print(f"Gannon : {Gannon}")
-#                    print(f"Link : {Link}")
+#                    print(f"Gannon : {characters[0]}")
+#                    print(f"Link : {characters[1]}")
 
             # getting to the last room that includes the triforce        
             if (self.x, self.y) == triforce[0]:
@@ -206,10 +215,11 @@ m = Map(5, 5, 2, 4, paths)
 
 # keeping the game going during each turn
 while True:
-    print("Inventory: ", inventory)
+    
     if "triforce" not in inventory:
         print(zelda)
         m.print_map()
+        print("Inventory: ", inventory)
         direction = input("What direction do you want to move? [up, down, left, right] ")
         m.move(direction)
 
@@ -218,13 +228,3 @@ while True:
         print(gameover)
         print("You have saved the princess and the kingdom of Hyrule by collecting the Triforce! You win!")
         break
-# Add a moves counter
-# Have multiple items in the same room
-# Fight monsters
-# Teleport to different rooms when trying to go certain ways
-# Only allow final boss fight when boss key is collected and all items collected
-# Get the triforce when beating the boss, automatically put player outside dungeon
-# start the player in the Hall
-
-# have 3 lives and a certain HP. Eat food to increase health
-# breaking this while loop means the game is over
