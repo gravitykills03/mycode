@@ -15,10 +15,10 @@ app = Flask(__name__)
 def correct(name):
     return f"You have answered {name} correctly! You should buy a lottery ticket:)\n"
 # This is a landing point for users (a start)
-@app.route("/") # user can land at "/"
-@app.route("/start") # or user can land at "/start"
-def start():
-    return render_template("triviamaker.html") # look for templates/postmaker.html
+@app.route("/<username>") # user can land at "/"
+@app.route("/start/<username>") # or user can land at "/start"
+def start(username):
+    return render_template("triviamaker.html", name = username) # look for templates/postmaker.html
 # This is where postmaker.html POSTs data to
 # A user could also browser (GET) to this location
 @app.route("/login", methods = ["POST", "GET"])
@@ -30,7 +30,7 @@ def login():
             return redirect(url_for("correct", name = answer)) # pass back to /success with val for name
         else: # if a user sent a post without nm then assign value defaultuser
             wanswer = "Wrong! You Failed!"
-            return redirect(url_for("start"))
+            return redirect(url_for("start", name = username))
     # GET would likely come from a user interacting with a browser
     elif request.method == "GET":
         if request.args.get("answer") == "Special Forces": # if nm was assigned as a parameter=value
@@ -38,7 +38,7 @@ def login():
             return redirect(url_for("correct", name = answer)) # pass back to /success with val for name
         else: # if nm was not passed...
             wanswer = "Wrong! You Failed" # ...then user is just defaultuser
-            return redirect(url_for("start"))
+            return redirect(url_for("start", name = username))
 if __name__ == "__main__":
    app.run(host="0.0.0.0", port=2224) # runs the application
 
