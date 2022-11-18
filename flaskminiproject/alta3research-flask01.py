@@ -11,7 +11,7 @@ import json
 import runpy
 
 app= Flask(__name__)
-
+# define dictionary for computers
 computers= [{
     "brand": "HP",
     "processor": "Intel I7",
@@ -25,15 +25,19 @@ computers= [{
               ]
              }]
 
+# route for user once computer is input into the lift
 @app.route("/list/<computers>")
 def yourcom(computers):
-    return f"Your favorite brand is {computers}! We have added your computer to the JSON list.\n"
-
+    print(f"Your favorite brand is {computers}! We have added your computer to the JSON list.\n")
+    return render_template("addcom.html", computer = computers)
+# route for user when first getting to the home page. Must use "/(whatever you want)".
 @app.route("/")
 @app.route("/<com>")
 @app.route("/home/<com>")
 def collection(com):
     return render_template("index.html", computer = com)
+
+# route for the json list to be shown. Starts with the first computer above.
 @app.route("/jsonlist", methods=["GET","POST"])
 def index():
     if request.method == 'POST':
@@ -48,6 +52,7 @@ def index():
            computers.append({"brand":brand,"processor":processor,"ram":ram,"weight":weight, "style":style})
 
     return jsonify(computers)
+# when clicking a button, json list is appended and new webpage is displayed
 @app.route("/login", methods = ["POST", "GET"])
 def login():
 
@@ -63,6 +68,7 @@ def login():
             else:
                 runpy.run_path("./alta3research-request04.py")
             return redirect(url_for("yourcom", computers = user_com))
+        # returns to home page if user does not input the correct computer type
         else:
             user_com = "unknown brand"
             return redirect("./home")

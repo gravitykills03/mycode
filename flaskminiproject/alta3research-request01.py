@@ -3,6 +3,7 @@ import requests
 import json
 from pprint import pprint
 
+# list that being appended with a new computer
 URL= "http://127.0.0.1:2224/jsonlist"
 
 new_computer1= {
